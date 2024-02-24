@@ -175,11 +175,11 @@ HRESULT WINAPI hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Fla
 VOID FindGadget()
 {
 
-	ClientDLLBase = reinterpret_cast<DWORD64>(GetModuleHandle(L"gameoverlayrenderer64.dll"));
+	DWORD64 GameOverlayRenderer64 = reinterpret_cast<DWORD64>(GetModuleHandle(L"gameoverlayrenderer64.dll"));
 
 
-	uintptr_t StartAddress = ClientDLLBase;
-	uintptr_t EndAddress = ClientDLLBase + 0x167C000;
+	uintptr_t StartAddress = GameOverlayRenderer64;
+	uintptr_t EndAddress = GameOverlayRenderer64 + 0x167C000;
 
 	std::string ReturnGadget = "FF 27";
 
