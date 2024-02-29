@@ -168,7 +168,7 @@ HRESULT WINAPI hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Fla
 	pContext->OMSetRenderTargets(1, &mainRenderTargetView, NULL);
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
-	return return_spoofer::spoof_call(reinterpret_cast<void*>(Offset::ReturnAddress), oPresent, pSwapChain, SyncInterval, Flags);
+	return oPresent(pSwapChain, SyncInterval, Flags);
 }
 
 
@@ -194,7 +194,7 @@ VOID FindGadget()
 VOID hkRender()
 {
 
-	FindGadget();
+	//FindGadget();
 
 	DWORD64 GameOverlayRenderer64 = reinterpret_cast<DWORD64>(GetModuleHandle(L"gameoverlayrenderer64.dll"));
 	uintptr_t GameOverlayStart = GameOverlayRenderer64;
@@ -209,10 +209,10 @@ VOID hkRender()
 	ReadMemoryInternal<DWORD64>(FirstDeference, Deference2, sizeof(DWORD64));
 	ReadMemoryInternal<DWORD64>(Deference2 + 0x40, OriginalPresent, sizeof(DWORD64));
 	oPresent = reinterpret_cast<Present>(OriginalPresent);
-	void** NewVTable = VirtualTableCopy(reinterpret_cast<void**>(Deference2));
-	NewVTable[8] = hkPresent;
-
-	memcpy(reinterpret_cast<void*>(FirstDeference), &NewVTable, sizeof(void*));
-
+	printf("%llx\n", oPresent);
+	DetourTransactionBegin();
+	DetourUpdateThread(GetCurrentThread());
+	DetourAttach(&(PVOID&)oPresent, hkPresent);
+	DetourTransactionCommit();
 
 }
