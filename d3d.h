@@ -201,7 +201,7 @@ VOID hkRender()
 	uintptr_t GameOverlayEnd = GameOverlayStart + 0x2FB000;
 	std::string PresentPattern = "48 8B ?? ?? ?? ?? ?? 48 89 ?? ?? ?? 48 8B ?? ?? ?? ?? ?? 48 89 ?? ?? ?? 89 74";
 	uintptr_t AOBPresent = PatternScan(GameOverlayStart, GameOverlayEnd, PresentPattern, true, false, 3);
-	uintptr_t pSwapChain = AOBPresent - 0x28;
+	uintptr_t pSwapChain = AOBPresent + 0x20;
 	DWORD64 FirstDeference;
 	DWORD64 Deference2;
 	DWORD64 OriginalPresent;
