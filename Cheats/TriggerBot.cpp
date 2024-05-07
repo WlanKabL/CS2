@@ -10,7 +10,7 @@ VOID TriggerBot()
     int TeamID;
 
     ReadMemoryInternal(Manager->ClientDLL + Offsets->dwLocalPlayerPawn, LocalController.PawnAddress, sizeof(LocalController.PawnAddress));
-    ReadMemoryInternal(LocalController.PawnAddress + 0x15A4, LocalController.uHandle, sizeof(LocalController.uHandle));
+    ReadMemoryInternal(LocalController.PawnAddress + 0x13B0, LocalController.uHandle, sizeof(LocalController.uHandle));
 
     if (LocalController.uHandle == -1)
         return;
